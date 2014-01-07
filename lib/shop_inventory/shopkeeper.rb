@@ -85,7 +85,7 @@ module ShopInventory
           if id_to_be_removed!=attributes[0].to_i
             temp_file.syswrite(record)
           else
-            puts "Record Removed"            
+            puts "\nProduct:   #{attributes[1]} Removed .................."            
           end
         end
       end  

@@ -53,7 +53,7 @@ module ShopInventory
         type = gets
 
         if type.to_i==1
-          shopkeeper=ShopInventory::Shopkeeper.new
+          shopkeeper=Shopkeeper.new
           begin
             shopkeeper.choices_to_shopkeeper
             print "\n\nHey Shopkeeper do you want to continue to shop(y/n): "
@@ -70,9 +70,11 @@ module ShopInventory
           puts "\nWrong type entered."   
         end  
         
-        print "\n\nDo you want to continue(y/no): "
+        print "\n\nDo you want to continue\n1.Yes\n2.No "
+        print "\nPlease enter your choice(1/2): "
         choice=gets
-      end while(choice.casecmp("y\n")==0)
+        choice.to_i
+      end while(choice==1)
     end
   end
 end

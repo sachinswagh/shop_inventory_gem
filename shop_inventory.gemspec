@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/shop_inventory'
   s.license       = 'MIT'
+  s.executables << 'shop_inventory'
 end

@@ -9,11 +9,18 @@ module ShopInventory
       this_product=gets
       record=search(this_product)
       if record
-        print "\n\nDetails of the product you want are:\n #{record}"      
+        print "\n\nDetails of the product you want are:\n"
+        print "\nProduct_id     Product_name            Price        "
+        print "Stock Items      Company Name       \n"
+        puts "--------------------------------------------------------------"+
+        "----------------------------" 
+        attributes=record.split(",")
+          attributes.each do |attribute|
+             print "      #{attribute}       " 
+          end     
       end
     end
-    
-
+        
     def search(product_name)
       File.open(File.expand_path('inventory.txt', File.dirname(__FILE__)), "r") do |file_name|
         if file_name
@@ -58,6 +65,18 @@ module ShopInventory
       end
     end
 
+    def ask_order_details(product_id)
+      print "\n Enter your name: "
+      cust_name=gets
+
+      print "\n Enter your credit card number: "
+      card_no=gets
+
+      print "\n Enter CVV number: "
+      cvv_no=gets
+      return [product_id,cust_name,card_no,cvv_no]
+    end
+
     def store_order(order_details)
       order_record=""
       order_details.each do |order_attribute|
@@ -65,7 +84,7 @@ module ShopInventory
         order_attribute.chomp!
         order_record.concat("#{order_attribute},")
       end
-      puts "order record is : #{order_record}"
+      puts "Your Order has been recorded ............. "
       File.open(File.expand_path('orders.txt', File.dirname(__FILE__)), "a+") do |f|
         if f
           order_record.chop!
@@ -98,12 +117,17 @@ module ShopInventory
       end
     end
 
-    def buy(order_details)
-      record=search_by_id(order_details[0])
+    def buy
+      print "\n Enter id of product that you want to buy: "
+      product_id=gets
+
+      record=search_by_id(product_id.to_i)
       if record
         product_attributes=record.split(",")
         stock_item=product_attributes[3].to_i
         if stock_item > 0
+          order_details=ask_order_details(product_id)
+          store_order(order_details)
           print "\n\n No of items of product #{product_attributes[1]} available are: #{stock_item}"
           print "\nEnter the no of items less than #{stock_item}: "
           no_of_items=gets
@@ -120,7 +144,7 @@ module ShopInventory
             print "\nPlease enter less no of items to buy..."
           end
         else
-          print "\n\nProduct is NOT available ......."
+          print "\n\nSorry Product is NOT available ......."
         end
       end
     end

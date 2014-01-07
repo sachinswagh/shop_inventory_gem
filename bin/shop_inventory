@@ -1,0 +1,2 @@
+require 'shop_inventory'
+ShopInventory::ShopInventory.start
